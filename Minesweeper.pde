@@ -30,7 +30,13 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
+    for(int r=0; r < NUM_ROWS;r++)
+     for(int c =0; c< NUM_COLS; c++){
+       if(mines.contains(buttons[r][c]) && buttons[r][c].clicked == true)
+       return false;
+       if(nonMineClicked <(NUM_ROWS*NUM_COLS)-NUM_MINES)
+     }
+      return false; //your code here
     return false;
 }
 public void displayLosingMessage()
