@@ -1,6 +1,6 @@
 import de.bezier.guido.*;
-public final static int NUM_ROWS = 10;
-public final static int NUM_COLS = 10;
+public final static int NUM_ROWS =30;
+public final static int NUM_COLS = 30;
 
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
@@ -9,7 +9,7 @@ public int buttonsClicked =0;//ArrayList of just the minesweeper buttons that ar
 
 void setup ()
 {
-    size(500, 500);
+    size(400, 400);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -28,7 +28,7 @@ void setup ()
 public void setMines()
 {
    
-    while(mines.size()< 20 ){
+    while(mines.size()< 50){
      int r = (int)(Math.random() * NUM_ROWS);
     int c = (int)(Math.random() * NUM_COLS);
     if(!mines.contains(buttons[r][c])){
@@ -73,7 +73,6 @@ public int countMines(int row, int col)
     numMines++;
     if(isValid(row,col) && mines.contains(buttons[row][col]))
        numMines--;//your code here
-       System.out.println(numMines);
     return numMines;
 }
 public class MSButton
@@ -96,8 +95,6 @@ public class MSButton
         Interactive.add( this ); // register it with the manager
     }
 
-
-
     // called by manager
     public void mousePressed () 
     {
@@ -110,12 +107,12 @@ public class MSButton
         displayLosingMessage();
         }
         
-        else if (countMines(myRow,myCol) > 0){
-        this.setLabel(Integer.toString(countMines(myRow,myCol)));
+        else if (countMines(this.myRow,this.myCol) > 0){
+        this.setLabel(Integer.toString(countMines(this.myRow,this.myCol)));
        
         }else{
-       for(int r = myRow -1; r <= myRow+1; r++)
-       for (int c = myCol -1; c <= myCol +1; c++)
+       for(int r = this.myRow -1; r <= this.myRow+1; r++)
+       for (int c = this.myCol -1; c <= this.myCol +1; c++)
           if(isValid(r,c) == true && buttons[r][c].clicked == false){
           buttons[r][c].mousePressed();//your code here
          
@@ -152,4 +149,3 @@ public class MSButton
         return flagged;
     }
 }
-
