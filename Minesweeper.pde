@@ -1,12 +1,12 @@
 import de.bezier.guido.*;
 public final static int NUM_ROWS =30;
 public final static int NUM_COLS = 30;
-
+public final static int NUM_MINES = 100;
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines;
 public int buttonsClicked =0;//ArrayList of just the minesweeper buttons that are mined
-
+public int nonMineClicked=0;
 void setup ()
 {
     size(400, 400);
@@ -28,7 +28,7 @@ void setup ()
 public void setMines()
 {
    
-    while(mines.size()< 50){
+    while(mines.size()< NUM_MINES){
      int r = (int)(Math.random() * NUM_ROWS);
     int c = (int)(Math.random() * NUM_COLS);
     if(!mines.contains(buttons[r][c])){
@@ -46,17 +46,37 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
-    return false;
+     for(int r=0;r<NUM_ROWS;r++)
+      for(int c=0;c<NUM_COLS;c++){
+       if(mines.contains(buttons[r][c])&&buttons[r][c].clicked==true)return false;
+       if(nonMineClicked<(NUM_ROWS*NUM_COLS)-NUM_MINES)return false;
+      }
+    return true;
 }
 public void displayLosingMessage()
 {
-    //your code here
+    buttons[11][8].setLabel("Y");
+    buttons[11][9].setLabel("O");
+    buttons[11][10].setLabel("U");
+    buttons[11][11].setLabel(" ");
+    buttons[11][12].setLabel("L");
+    buttons[11][13].setLabel("O");
+    buttons[11][14].setLabel("S");
+    buttons[11][15].setLabel("E");
+    buttons[11][15].setLabel("!");//your code here
 }
 public void displayWinningMessage()
 {
-    //your code here
-}
+   buttons[11][8].setLabel("Y");
+    buttons[11][9].setLabel("O");
+    buttons[11][10].setLabel("U");
+    buttons[11][11].setLabel(" ");
+    buttons[11][12].setLabel("W");
+    buttons[11][13].setLabel("I");
+    buttons[11][14].setLabel("N");
+    buttons[11][15].setLabel(":)");
+}//your code here
+
 public boolean isValid(int r, int c)
 {
     if(r >= 0 && r < NUM_ROWS && c >=0 && c <NUM_COLS)
@@ -99,6 +119,7 @@ public class MSButton
     public void mousePressed () 
     {
         clicked = true;
+         if(!mines.contains(this))nonMineClicked++;
         if(mouseButton == RIGHT){
           flagged = !flagged;
           if(flagged == false)
